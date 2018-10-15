@@ -84,3 +84,38 @@ let min_index a =
         loop min (next idx) min_idx
     else min_idx
   in loop (read a (Index 0)) (Index 1) (Index 0)
+
+(*
+  Write a function 
+    find : string array -> string -> int option 
+  such that 
+    find a w = Some idx if a.(idx) = w and find a w = None if there is no such index
+*)
+let find a w = 
+  let rec loop idx = 
+    if idx = Array.length a then None else 
+    if a.(idx) = w then Some idx else loop (idx + 1)
+  in loop 0 
+
+(*
+  Sometimes, when a value of type t is missing, a default value should be used. 
+  Write a function 
+    default_int : int option -> int 
+  such that: default_int None = 0 and default_int (Some x) = x
+*)
+let default_int x = match x with
+  | None -> 0
+  | Some x -> x;;
+
+(*
+  Write a function 
+    merge : int option -> int option -> int option 
+  such that:
+    merge None None = None
+    merge (Some x) None = merge None (Some x) = Some x
+    merge (Some x) (Some y) = Some (x + y)
+*)
+let merge a b = match (a, b) with 
+  | (None, None) -> None
+  | (Some x, None) | (None, Some x) -> Some x
+  | (Some x, Some y) -> Some (x + y)
